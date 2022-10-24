@@ -8,7 +8,7 @@ interface ButtonProps extends RectButtonProps {
   type?: TypeProps
   isLoading?: boolean
   children?: ReactNode
-  onPress: () => void
+  onPress?: () => void
 }
 
 export const Button: React.FC<ButtonProps> = ({ title, type = 'primary', isLoading, onPress, ...rest }) => {
