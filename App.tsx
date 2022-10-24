@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans'
 import { DMSerifDisplay_400Regular } from '@expo-google-fonts/dm-serif-display'
 import 'react-native-gesture-handler'
+import { AuthProvider, useAuth } from 'src/hooks/auth'
 
 export default function App() {
 
@@ -24,7 +25,9 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
         <StatusBar backgroundColor='transparent' translucent style='light' />
-        <SignIn />
+        <AuthProvider>
+          <SignIn />
+        </AuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   )
