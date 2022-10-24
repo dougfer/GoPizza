@@ -1,8 +1,10 @@
 import React from 'react'
 import { Container } from './styles'
-import { Input } from 'src/components'
+import { Input, Button } from 'src/components'
+import { Alert } from 'react-native'
 
 export const SignIn: React.FC = () => {
+
   return (
     <Container>
       <Input
@@ -15,6 +17,11 @@ export const SignIn: React.FC = () => {
         placeholder='Senha'
         type='secondary'
         secureTextEntry
+      />
+      <Button 
+        title='Entrar'
+        type='secondary'
+        onPress={() => Alert.alert('teste')}
       />
       
     </Container>
