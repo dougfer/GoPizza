@@ -16,7 +16,7 @@ export const SignIn: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signIn, isLogging } = useAuth()
+  const { signIn, isLogging, forgotPassword } = useAuth()
 
   const handleSign = () => {
     signIn(email, password)
@@ -45,7 +45,7 @@ export const SignIn: React.FC = () => {
             value={password}
             onChangeText={setPassword}
           />
-          <ForgotPasswordButton>
+          <ForgotPasswordButton onPress={() => forgotPassword(email)}>
             <ForgotPasswordLabel>
                 Esqueci minha senha
             </ForgotPasswordLabel>

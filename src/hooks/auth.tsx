@@ -10,6 +10,8 @@ type AuthProviderProps = {
 
 type AuthContextData = {
   signIn: (email: string, password: string) => Promise<void>
+  signOut: () => Promise<void>
+  forgotPassword: (email: string) => Promise<void>
   isLogging: boolean
   user: User | null
 }
@@ -75,12 +77,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     if(storagedUser) {
       const userData = JSON.parse(storagedUser) as User
-      console.log('storage', userData)
       setUser(userData)
     }
 
     setIsLoading(false)
+  }
 
+  const signOut = async () => {
+    await auth().signOut()
+    await AsyncStorage.removeItem(USER_COLLECTION)
+    setUser(null)
+  }
+
+  const forgotPassword = async (email: string) => {
+    if(!email) {
+      return Alert.alert('Redefinir senha', 'Informe o e-mail.')
+    }
+
+    auth().sendPasswordResetEmail(email)
+      .then(() => Alert.alert('Redefinir senha', 'Enviamos um link no seu e-mail para redefinir sua senha'))
+      .catch(() => Alert.alert('Redefinir senha', 'Não foi possível enviar o e-mail'))
   }
 
   useEffect(() => {
@@ -88,7 +104,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ isLogging: isLoading, signIn, user }}>
+    <AuthContext.Provider value={{ isLogging: isLoading, signIn, user, signOut, forgotPassword }}>
       {children}
     </AuthContext.Provider>
   )
